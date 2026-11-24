@@ -1,0 +1,124 @@
+---
+layout: page
+title: Assignment 06 - miniRA to MIPS
+permalink: /assignments/miniRA_to_mips
+---
+
+| Release Date | 19/10/2026 |
+| Deadline     | 02/11/2026, 23:59 hours |
+
+<br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 03/11/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
+
+This assignment is the last part of a multi part project to 
+write an optimizing compiler for Minijava. In this assignment, 
+we start with programs in 
+[miniRA](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets) 
+format and translate them to 
+[MIPS Assembly](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).  
+
+Use JTB and JavaCC and write in Java one or more visitors which 
+translate miniRA programs to assembly form. 
+Your main file should be called P5.java, 
+if A.miniRA contains a program to be assembled then
+
+```bash
+$ javac P5.java
+$ java P5 < A.miniRA > A.s
+```
+
+should create A.s in MIPS assembly form and is semantically equivalent to A.miniRA. 
+Note, your program must take input from standard input 
+and write to standard output (so that we can use redirection).
+
+To check that a program is in miniRA form, you could use the [BNF for MIPS.jj](https://www.cse.iitm.ac.in/~krishna/cs3300/mips.html) to build a parser. 
+To ensure that your generated .s program is semantically equivalent to the miniRA program, 
+compare what the two programs print. Run the miniRA input under its
+interpreter, and your generated assembly under the
+[spim](https://pages.cs.wisc.edu/~larus/spim.html) MIPS simulator; the two
+should agree:
+
+```bash
+$ java -jar interp-miniRA.jar < A.miniRA     # what the input does
+$ spim -file A.s                             # what your output does
+```
+
+Install it with `sudo apt install spim` or `brew install spim`. The container
+described under [Development
+environment](/cs3300_m26/resources/#development-environment) already has it,
+which is the easiest route on Windows and on Apple Silicon.
+
+
+Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
+and `make clean` removes the `.class` files you must delete before submitting.
+
+Note: Please do not alter the directory structure of `RollNo_P5`. 
+Only edit `GJDepthFirst.java` and `P5.java`
+## Resources
+
+The source files are on
+[Github](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/06_miniRA_to_mips).
+
+Get the source by cloning the entire repo:
+
+```bash
+$ git clone https://github.com/fplaunchpad/cs3300_m26
+```
+
+If you have already cloned the repo, you can get the latest updates by:
+
+```bash
+$ cd cs3300_m26 # go to the cloned repo
+$ git pull
+```
+
+The miniRA grammar specification is 
+[BNF-miniRA](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).
+
+The mips grammar specification is 
+[mips_specifications](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).
+
+
+## Submission
+
+Rename the folder `RollNo_P5` with your roll number. For example, if your roll
+number is `cs99b999`, then the folder should be named `cs99b999_P5`. Remove all
+the `.class` files before submission. For example, you can do:
+
+```bash
+$ cd cs99b999_P5
+$ find . -name "*.class" | xargs rm
+```
+
+Then produce the compressed gzip archive as follows:
+
+```bash
+$ tar cvzf cs99b999_P5.tar.gz cs99b999_P5
+```
+
+Submit the `.tar.gz` file. 
+
+Note: You should thoroughly test your code. Some sample miniRA programs are provided for testing. Create positive and negative tests per feature and test your code before submission. Please ensure that there are no compilation errors. If there are compilation errors, that code will yield zero marks.
+
+## Checking your work before you submit
+
+Run the same program that marks you over the public testcases:
+
+```bash
+$ python3 ../selftest/eval.py <YOUR-ROLLNO>_P5.tar.gz
+```
+
+It builds your archive the way the grader does, so a packaging mistake shows
+up here instead of costing you marks. Note that assignment 6 submits as
+`_P5`, one behind the assignment number.
+
+There are three sets of testcases: the **public** set you can run here, a
+**private** set behind the online checker that reports only how many passed,
+and a **hidden** set used for marking that you never see. You are marked on
+all three together, every test counting equally, so passing the first two is
+necessary and not sufficient. A submission that does not build scores zero.
+
+See [selftest/README.md](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/selftest).

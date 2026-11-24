@@ -1,0 +1,115 @@
+---
+layout: page
+title: Assignment 02 - Type Checker
+permalink: /assignments/typechecker
+---
+
+| Release Date | 17/08/2026 |
+| Deadline     | 07/09/2026, 23:59 hours |
+
+<br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 08/09/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
+
+This assignment is the first part of a multi part project to write an optimizing
+compiler for Minijava. We start with the LL(k) grammar for minijava and follow
+simplification and optimization phases, similar to what is seen in a standard
+optimizing compiler. In this assignment, we will implement a type checker for
+the minijava compiler.
+
+Use JTB and JavaCC and write in Java one or more visitors which type check a
+MiniJava program. Your main file should be called `P1.java`, and if `A.java`
+contains a program to be type checked, then
+
+```bash
+$ javac P1.java
+$ java P1 < A.java
+```
+
+Your program must print exactly one line and no other output:
+
+- Print `Symbol not found` if name resolution fails: a referenced class
+  (including a superclass or a class used as a type), variable, or method has no
+  declaration in the appropriate scope.
+- Print `Type error` if all referenced symbols can be resolved, but the program
+  violates any other static-semantic rule. Examples include incompatible types,
+  duplicate declarations, invalid method overriding, and cyclic inheritance.
+- Print `Program type checked successfully` if the program has no
+  static-semantic errors.
+
+You may assume that each test program has an unambiguous expected error
+category. Your program must take input from standard input and write to standard
+output (so that we can use redirection).
+
+Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
+and `make clean` removes the `.class` files you must delete before submitting.
+
+## Resources
+
+The source files are on
+[Github](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/02_typechecker).
+
+Get the source by cloning the entire repo:
+
+```bash
+$ git clone https://github.com/fplaunchpad/cs3300_m26
+```
+
+If you have already cloned the repo, you can get the latest updates by:
+
+```bash
+$ cd cs3300_m26 # go to the cloned repo
+$ git pull
+```
+
+The MiniJava grammar specification is
+[here](/cs3300_m26/grammar/minijava/).
+
+Use the [MiniJava Type System — CS3300 revision (7 September 2026)](/cs3300_m26/assets/miniJava-typesystem-cs3300.pdf).
+The corrected PDF incorporates covariant return types in method overriding
+(rule 16), subtyping for return expressions (rule 21), and reflexivity for all
+MiniJava types (Section 4). It supersedes the October 2011 reference for this
+assignment; no separate errata need to be applied.
+
+## Submission
+
+Rename the folder `RollNo_P1` with your roll number. For example, if your roll
+number is `cs99b999`, then the folder should be named `cs99b999_P1`. Remove all
+the `.class` files before submission. For example, you can do:
+
+```bash
+$ cd cs99b999_P1
+$ find . -name "*.class" | xargs rm
+```
+
+Then produce the compressed gzip archive as follows:
+
+```bash
+$ tar cvzf cs99b999_P1.tar.gz cs99b999_P1
+```
+
+Submit the `.tar.gz` file. 
+
+Note: You should thoroughly test your code. Some sample mini java programs are provided for testing. Create positive and negative tests per feature and test your code before submission. Please ensure that there are no compilation errors. If there are compilation errors, that code will yield zero marks.
+
+## Checking your work before you submit
+
+Run the same program that marks you over the public testcases:
+
+```bash
+$ python3 ../selftest/eval.py <YOUR-ROLLNO>_P1.tar.gz
+```
+
+It builds your archive the way the grader does, so a packaging mistake shows
+up here instead of costing you marks. Note that assignment 2 submits as
+`_P1`, one behind the assignment number.
+
+There are three sets of testcases: the **public** set you can run here, a
+**private** set behind the online checker that reports only how many passed,
+and a **hidden** set used for marking that you never see. You are marked on
+all three together, every test counting equally, so passing the first two is
+necessary and not sufficient. A submission that does not build scores zero.
+
+See [selftest/README.md](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/selftest).
